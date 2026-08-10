@@ -73,7 +73,7 @@ if has_dataset():
         st.write(metadata.dtype_counts)
 
     st.subheader("Preview")
-    st.dataframe(df.head(20), use_container_width=True)
+    st.dataframe(df.head(20), use_container_width="stretch")
 
 else:
     st.info("Upload a file above to get started.")

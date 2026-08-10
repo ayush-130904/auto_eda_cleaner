@@ -43,7 +43,7 @@ column_rows = [
     for c in profile.columns
 ]
 
-st.dataframe(pd.DataFrame(column_rows), use_container_width=True, hide_index=True)
+st.dataframe(pd.DataFrame(column_rows), use_container_width="stretch", hide_index=True)
 
 if profile.constant_columns:
     st.warning(
