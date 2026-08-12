@@ -51,9 +51,9 @@ IntelliData-AI/
 ## Roadmap
 
 - [x] Phase 1 — Project setup, config, logging
-- [ ] Phase 2 — Dataset upload & validation
-- [ ] Phase 3 — Data profiling
-- [ ] Phase 4 — Data quality scoring
+- [x] Phase 2 — Dataset upload & validation
+- [x] Phase 3 — Data profiling
+- [x] Phase 4 — Data quality scoring
 - [ ] Phase 5 — Intelligent cleaning engine
 - [ ] Phase 6 — Exploratory data analysis
 - [ ] Phase 7 — Visualization dashboard
