@@ -54,7 +54,7 @@ IntelliData-AI/
 - [x] Phase 2 — Dataset upload & validation
 - [x] Phase 3 — Data profiling
 - [x] Phase 4 — Data quality scoring
-- [ ] Phase 5 — Intelligent cleaning engine
+- [x] Phase 5 — Intelligent cleaning engine
 - [ ] Phase 6 — Exploratory data analysis
 - [ ] Phase 7 — Visualization dashboard
 - [ ] Phase 8 — Gemini AI service layer
