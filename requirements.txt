@@ -3,7 +3,7 @@ streamlit==1.60.0
 python-dotenv==1.0.1
 
 # --- Data processing ---
-pandas==2.2.2
+pandas==3.0.2
 numpy==1.26.4
 openpyxl==3.1.5          # Excel read/write
 pyarrow==17.0.0           # Parquet read/write
