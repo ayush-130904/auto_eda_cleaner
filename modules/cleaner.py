@@ -148,7 +148,7 @@ def clean_string_columns(df: pd.DataFrame, log: CleaningLog) -> pd.DataFrame:
 
     for col in df.columns:
         series = df[col]
-        if series.dtype != object:
+        if not pd.api.types.is_string_dtype(series):
             continue
 
         non_null = series.dropna()
