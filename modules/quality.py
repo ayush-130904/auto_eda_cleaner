@@ -29,21 +29,32 @@ def _is_mixed_type_column(series: pd.Series) -> bool:
 
 
 #detecting outliers with IQR (for the validity score)
-def count_outliers_iqr(series: pd.Series) -> int:
+def iqr_bounds(series: pd.Series) -> tuple[float, float] | None:
+    """Return (lower_bound, upper_bound) for outlier detection via the
+    standard 1.5*IQR rule, or None if bounds can't be meaningfully computed
+    (too few values, or zero variance)."""
     non_null = series.dropna()
     if len(non_null) < 4:
-        return 0
+        return None
 
     q1 = non_null.quantile(0.25)
     q3 = non_null.quantile(0.75)
     iqr = q3 - q1
 
     if iqr == 0:
+        return None
+
+    return (q1 - 1.5 * iqr, q3 + 1.5 * iqr)
+
+
+def count_outliers_iqr(series: pd.Series) -> int:
+    """Count outliers in a numeric column using the standard 1.5*IQR rule."""
+    bounds = iqr_bounds(series)
+    if bounds is None:
         return 0
 
-    lower_bound = q1 - 1.5 * iqr
-    upper_bound = q3 + 1.5 * iqr
-
+    lower_bound, upper_bound = bounds
+    non_null = series.dropna()
     return int(((non_null < lower_bound) | (non_null > upper_bound)).sum())
 
 def assess_quality(df: pd.DataFrame, profile: DatasetProfile) -> QualityScore:
