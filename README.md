@@ -57,7 +57,7 @@ IntelliData-AI/
 - [x] Phase 5 — Intelligent cleaning engine
 - [x] Phase 6 — Exploratory data analysis
 - [x] Phase 7 — Visualization dashboard
-- [ ] Phase 8 — Gemini AI service layer
+- [x] Phase 8 — Gemini AI service layer
 - [ ] Phase 9 — AI cleaning explanations + executive summary
 - [ ] Phase 10 — AI business insights + feature engineering
 - [ ] Phase 11 — ML readiness + recommendation engine
