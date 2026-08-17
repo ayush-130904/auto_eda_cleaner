@@ -1,12 +1,3 @@
-"""
-Centralized application configuration.
-
-Every setting the app needs comes from environment variables, loaded once
-here, so no other module ever calls os.getenv() directly. This gives us
-one place to see every config value the app depends on, and one place to
-change defaults or add validation later.
-"""
-
 from __future__ import annotations
 
 import os
