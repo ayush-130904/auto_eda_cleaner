@@ -59,7 +59,7 @@ IntelliData-AI/
 - [x] Phase 7 — Visualization dashboard
 - [x] Phase 8 — Gemini AI service layer
 - [x] Phase 9 — AI cleaning explanations + executive summary
-- [ ] Phase 10 — AI business insights + feature engineering
+- [x] Phase 10 — AI business insights + feature engineering
 - [ ] Phase 11 — ML readiness + recommendation engine
 - [ ] Phase 12 — AI dataset chatbot
 - [ ] Phase 13 — Report generation (PDF/HTML)
