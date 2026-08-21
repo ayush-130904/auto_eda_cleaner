@@ -69,6 +69,13 @@ def build_executive_summary_prompt(
     return build_prompt(_INSTRUCTION, truncate_for_prompt(context))
 
 
+def _plural(count: int, singular: str, plural: str | None = None) -> str:
+    """Return the correctly pluralized word for `count`."""
+    if count == 1:
+        return singular
+    return plural if plural is not None else f"{singular}s"
+
+
 def _fallback_summary(
     profile: DatasetProfile,
     quality: QualityScore,
@@ -83,15 +90,18 @@ def _fallback_summary(
     )
 
     sentences = [
-        f"This dataset contains {profile.n_rows:,} rows and "
-        f"{profile.n_columns} columns.",
+        f"This dataset contains {profile.n_rows:,} "
+        f"{_plural(profile.n_rows, 'row')} and {profile.n_columns} "
+        f"{_plural(profile.n_columns, 'column')}.",
         f"Overall data quality was {quality_word} "
         f"({quality.overall_score}%) before cleaning.",
     ]
 
     if log.actions:
         sentences.append(
-            f"{len(log.actions)} automated cleaning action(s) were applied, "
+            f"{len(log.actions)} automated cleaning "
+            f"{_plural(len(log.actions), 'action')} "
+            f"{_plural(len(log.actions), 'was', 'were')} applied, "
             f"addressing issues including "
             f"{', '.join(sorted({a.issue for a in log.actions}))}."
         )
