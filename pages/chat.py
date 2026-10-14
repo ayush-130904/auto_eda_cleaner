@@ -23,7 +23,7 @@ settings = load_settings()
 logger = get_logger("pages.chat", settings.logs_dir, settings.log_level)
 init_session_state()
 
-st.title("?? Chat with Your Dataset")
+st.title("Chat with Your Dataset")
 
 if not has_dataset():
     st.info("Upload a dataset first on the **Upload** page.")
