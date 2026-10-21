@@ -1,0 +1,67 @@
+# 📊 IntelliData AI
+
+**An AI-powered data intelligence platform.** Upload a raw dataset and it profiles it, scores its quality, cleans it automatically (logging every decision), runs EDA, explains what it did with Gemini, assesses ML readiness, lets you chat with your data, and exports a PDF/HTML report.
+
+> **Live demo:** _add your Render URL here_ · Click **"Load sample messy dataset"** on the home page to try it in one click.
+
+<!-- Add 3-4 screenshots here: Quality page, Cleaning log, ML Readiness, Chat, PDF report -->
+
+## What it does
+
+| Stage | Feature |
+|---|---|
+| Ingest | CSV / Excel / JSON / Parquet upload with validation (type, size, empty-file checks) |
+| Profile | Types, missing values, duplicates, constant & high-cardinality columns |
+| Score | Completeness, duplicate, consistency, validity → one 0–100 quality score |
+| Clean | Duplicates, whitespace/casing, missing values (median vs mean chosen *by outlier presence*), IQR outlier capping, final dedup pass. Every action is logged with method + reason |
+| Analyze | Summary stats, skewness, correlations, interactive Plotly dashboard |
+| AI layer (Gemini) | Cleaning explanations, executive summary, business insights, feature-engineering ideas, ML algorithm recommendations, dataset chatbot |
+| ML readiness | Missing values, encoding, scaling, multicollinearity, class imbalance, target leakage → readiness score |
+| Export | Downloadable PDF (ReportLab) and HTML (Jinja2) reports |
+
+## Design decisions worth knowing
+
+- **AI is an enhancement, never a single point of failure.** Every AI feature has a rule-based fallback (retry with exponential backoff first), so the app stays useful with no API key or during rate limits. The chatbot is the exception — open-ended Q&A has no honest fallback, so it reports the failure plainly.
+- **The fallbacks are honest about their limits.** E.g. the business-insights fallback states what was *measured*, never invents a business story it can't back.
+- **Logic is separated from UI.** `modules/` has zero Streamlit imports, so everything is unit-testable; `pages/` is thin rendering code.
+- **Fail fast and cheap.** Upload validation checks extension and size before parsing.
+- **Deliberately scoped:** single-user, in-session state, no auth/database — chosen to keep the app deployable on free tiers with no expiring services.
+
+## Bugs the test suite caught (the interesting part)
+
+- pandas 3.x uses a dedicated string dtype, so `dtype == object` silently skipped *every* text column during cleaning.
+- A single mid-pipeline dedup isn't enough: string normalization **and** imputation can create new duplicates, so dedup runs again at the end.
+- Target-leakage detection silently did nothing for categorical targets (the correlation matrix is numeric-only); fixed by correlating a binary target directly.
+- The target column was being flagged as a feature needing encoding.
+
+## Run locally
+
+```bash
+python -m venv venv && source venv/bin/activate     # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env        # add GEMINI_API_KEY (free key: aistudio.google.com/app/apikey)
+streamlit run app.py
+```
+
+Tests: `pip install -r requirements-dev.txt && pytest` (118 tests; AI paths use an injected fake client — no network or key needed).
+
+## Deploy (Render, free tier)
+
+1. Push to GitHub. 2. Render → New → Blueprint → select the repo (`render.yaml` is picked up). 3. Set `GEMINI_API_KEY` in the dashboard. Free web services sleep after ~15 min idle, so the first load can take ~30–60s.
+
+## Tech stack
+
+Python 3.12 · Streamlit · pandas · NumPy · Plotly · statsmodels · google-genai (Gemini) · ReportLab · Jinja2 · pytest
+
+## Project structure
+
+```
+app.py                 landing page
+pages/                 10 Streamlit pages (Upload → … → Report)
+modules/               loader, profiler, quality, cleaner, eda, visualizer, ml_readiness, report_generator
+modules/ai/            client (retry), prompts, explainer, summary, insights, features, ml recs, chatbot
+utils/                 config, logging, session state
+templates/             Jinja2 report template
+sample_data/           messy demo dataset
+tests/                 pytest suite
+```
