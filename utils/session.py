@@ -17,6 +17,7 @@ import pandas as pd
 import streamlit as st
 
 # --- Key names (single source of truth) ---
+<<<<<<< HEAD
 DATASET = "dataset"                    # pd.DataFrame â€” the working dataset
 DATASET_METADATA = "dataset_metadata"  # DatasetMetadata â€” see modules/loader.py
 DATASET_FILENAME = "dataset_filename"  # str â€” original uploaded filename
@@ -29,12 +30,24 @@ FEATURE_ENGINEERING = "feature_engineering"  # str â€” see modules/ai/feature_en
 ML_TARGET_COLUMN = "ml_target_column"  # str | None â€” user-selected target column
 ML_RECOMMENDATIONS = "ml_recommendations"  # str â€” see modules/ai/ml_recommendation.py
 CHAT_SESSION = "chat_session"  # ChatSession | None â€” see modules/ai/chatbot.py
+=======
+DATASET = "dataset"                    # pd.DataFrame — the working dataset
+DATASET_METADATA = "dataset_metadata"  # DatasetMetadata — see modules/loader.py
+DATASET_FILENAME = "dataset_filename"  # str — original uploaded filename
+CLEANED_DATASET = "cleaned_dataset"    # pd.DataFrame — output of modules/cleaner.py
+CLEANING_LOG = "cleaning_log"          # CleaningLog — see modules/cleaner.py
+CLEANING_EXPLANATIONS = "cleaning_explanations"  # dict[str, str] — see modules/ai/cleaning_explainer.py
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 
 
 def init_session_state() -> None:
     """
     Ensure every key this app relies on exists in session_state, even
+<<<<<<< HEAD
     before a file is uploaded. Call once at the top of every page â€”
+=======
+    before a file is uploaded. Call once at the top of every page —
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     it's a no-op after the first call (setdefault doesn't overwrite).
 
     This avoids `KeyError` / `AttributeError` scattered across pages
@@ -46,12 +59,15 @@ def init_session_state() -> None:
     st.session_state.setdefault(CLEANED_DATASET, None)
     st.session_state.setdefault(CLEANING_LOG, None)
     st.session_state.setdefault(CLEANING_EXPLANATIONS, None)
+<<<<<<< HEAD
     st.session_state.setdefault(EXECUTIVE_SUMMARY, None)
     st.session_state.setdefault(BUSINESS_INSIGHTS, None)
     st.session_state.setdefault(FEATURE_ENGINEERING, None)
     st.session_state.setdefault(ML_TARGET_COLUMN, None)
     st.session_state.setdefault(ML_RECOMMENDATIONS, None)
     st.session_state.setdefault(CHAT_SESSION, None)
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 
 
 def set_dataset(df: pd.DataFrame, metadata: Any, filename: str) -> None:
@@ -105,6 +121,7 @@ def get_cleaning_explanations() -> dict | None:
 
 
 def has_cleaning_explanations() -> bool:
+<<<<<<< HEAD
     return st.session_state.get(CLEANING_EXPLANATIONS) is not None
 
 
@@ -162,3 +179,6 @@ def get_chat_session() -> Any:
 
 def set_chat_session(session: Any) -> None:
     st.session_state[CHAT_SESSION] = session
+=======
+    return st.session_state.get(CLEANING_EXPLANATIONS) is not None
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

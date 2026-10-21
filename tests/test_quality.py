@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 """
 Unit tests for modules/quality.py.
 """
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 import numpy as np
 import pandas as pd
 import pytest
@@ -9,6 +12,7 @@ import pytest
 from modules.profiler import profile_dataset
 from modules.quality import assess_quality
 
+<<<<<<< HEAD
 
 def _make_messy_dataset() -> pd.DataFrame:
     """
@@ -23,6 +27,12 @@ def _make_messy_dataset() -> pd.DataFrame:
     np.random.seed(42)
     n = 200
 
+=======
+def _make_messy_dataset() -> pd.DataFrame:
+    np.random.seed(42)
+
+    n = 200
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     age = list(np.random.randint(20, 60, n))
     income = list(np.random.uniform(30000, 90000, n))
     signup_source = list(np.random.choice(["web", "mobile", "referral"], n))
@@ -33,12 +43,21 @@ def _make_messy_dataset() -> pd.DataFrame:
     income[10] = "N/A"      # mixed type
 
     df = pd.DataFrame({"age": age, "income": income, "signup_source": signup_source})
+<<<<<<< HEAD
     df.loc[50:79, "age"] = np.nan          # 30 missing values, isolated range
     df = pd.concat([df, df.iloc[100:140]], ignore_index=True)  # 40 duplicates, isolated range
 
     return df
 
 
+=======
+
+    df.loc[50:79, "age"] = np.nan          # 30 missing values, isolated range
+
+    df = pd.concat([df, df.iloc[100:140]], ignore_index=True)  # 40 duplicates, isolated range
+    return df
+
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 def test_quality_detects_exact_duplicate_count():
     df = _make_messy_dataset()
     profile = profile_dataset(df)
@@ -47,6 +66,7 @@ def test_quality_detects_exact_duplicate_count():
 
 
 def test_quality_detects_mixed_type_column():
+<<<<<<< HEAD
     df = _make_messy_dataset()
     profile = profile_dataset(df)
     quality = assess_quality(df, profile)
@@ -64,6 +84,17 @@ def test_quality_scores_are_bounded_0_to_100():
     df = _make_messy_dataset()
     profile = profile_dataset(df)
     quality = assess_quality(df, profile)
+=======
+    ...
+    assert quality.inconsistent_columns == ["income"]
+
+def test_quality_detects_outliers_with_correct_count():
+    ...
+    assert quality.outlier_columns.get("age") == 2
+
+def test_quality_scores_are_bounded_0_to_100():
+    ...
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     for score in (
         quality.completeness_score,
         quality.duplicate_score,
@@ -73,7 +104,10 @@ def test_quality_scores_are_bounded_0_to_100():
     ):
         assert 0.0 <= score <= 100.0
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 def test_clean_dataset_scores_100():
     df = pd.DataFrame(
         {
@@ -93,20 +127,31 @@ def test_messy_dataset_scores_meaningfully_lower_than_clean():
     messy_profile = profile_dataset(messy_df)
     messy_quality = assess_quality(messy_df, messy_profile)
 
+<<<<<<< HEAD
     clean_df = pd.DataFrame(
         {
             "age": np.random.randint(20, 60, 100),
             "income": np.random.uniform(30000, 90000, 100),
         }
     )
+=======
+    clean_df = pd.DataFrame({...})
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     clean_profile = profile_dataset(clean_df)
     clean_quality = assess_quality(clean_df, clean_profile)
 
     assert messy_quality.overall_score < clean_quality.overall_score
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 def test_quality_handles_empty_dataframe_without_crashing():
     df = pd.DataFrame({"a": [], "b": []})
     profile = profile_dataset(df)
     quality = assess_quality(df, profile)
+<<<<<<< HEAD
     assert quality.overall_score == 100.0
+=======
+    assert quality.overall_score == 100.0
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

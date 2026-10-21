@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 Intelligent data cleaning.
 
@@ -7,15 +8,24 @@ and returns both the cleaned DataFrame and the complete log -- both are
 needed by later phases (AI explanations, reports, the UI).
 """
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
+<<<<<<< HEAD
 
 import pandas as pd
 
 from modules.quality import count_outliers_iqr, iqr_bounds
 
+=======
+from modules.quality import count_outliers_iqr,  iqr_bounds
+
+import pandas as pd
+
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 
 @dataclass(frozen=True)
 class CleaningAction:
@@ -31,7 +41,10 @@ class CleaningAction:
     before_summary: str
     after_summary: str
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 @dataclass
 class CleaningLog:
     """Collects CleaningAction entries as cleaning operations run."""
@@ -72,7 +85,12 @@ class CleaningLog:
         return pd.DataFrame([vars(a) for a in self.actions])
 
 
+<<<<<<< HEAD
 def handle_missing_values(df: pd.DataFrame, log: CleaningLog) -> pd.DataFrame:
+=======
+    #handling missing values
+    def handle_missing_values(df: pd.DataFrame, log: CleaningLog) -> pd.DataFrame:
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     df = df.copy()
 
     for col in df.columns:
@@ -125,7 +143,11 @@ def handle_missing_values(df: pd.DataFrame, log: CleaningLog) -> pd.DataFrame:
 
     return df
 
+<<<<<<< HEAD
 
+=======
+#remove duplications
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 def remove_duplicates(df: pd.DataFrame, log: CleaningLog) -> pd.DataFrame:
     duplicate_count = int(df.duplicated().sum())
     if duplicate_count == 0:
@@ -152,6 +174,10 @@ def remove_duplicates(df: pd.DataFrame, log: CleaningLog) -> pd.DataFrame:
     return df
 
 
+<<<<<<< HEAD
+=======
+#string cleaning: whitespace and case normalization
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 def clean_string_columns(df: pd.DataFrame, log: CleaningLog) -> pd.DataFrame:
     df = df.copy()
 
@@ -212,6 +238,10 @@ def clean_string_columns(df: pd.DataFrame, log: CleaningLog) -> pd.DataFrame:
     return df
 
 
+<<<<<<< HEAD
+=======
+#treaating outliers 
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 def treat_outliers(df: pd.DataFrame, log: CleaningLog) -> pd.DataFrame:
     df = df.copy()
 
@@ -227,10 +257,14 @@ def treat_outliers(df: pd.DataFrame, log: CleaningLog) -> pd.DataFrame:
         if outlier_count == 0:
             continue
 
+<<<<<<< HEAD
         before_summary = (
             f"{outlier_count} values outside "
             f"[{round(lower_bound, 2)}, {round(upper_bound, 2)}]"
         )
+=======
+        before_summary = f"{outlier_count} values outside [{round(lower_bound, 2)}, {round(upper_bound, 2)}]"
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
         df[col] = df[col].clip(lower=lower_bound, upper=upper_bound)
 
         log.add(
@@ -246,12 +280,17 @@ def treat_outliers(df: pd.DataFrame, log: CleaningLog) -> pd.DataFrame:
             ),
             rows_affected=outlier_count,
             before_summary=before_summary,
+<<<<<<< HEAD
             after_summary="values capped to bounds",
+=======
+            after_summary=f"values capped to bounds",
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
         )
 
     return df
 
 
+<<<<<<< HEAD
 def auto_clean(df: pd.DataFrame) -> tuple[pd.DataFrame, CleaningLog]:
     """Run the full cleaning pipeline in a deliberate order:
     1. remove_duplicates    -- cheap first pass; reduces the amount of
@@ -273,12 +312,22 @@ def auto_clean(df: pd.DataFrame) -> tuple[pd.DataFrame, CleaningLog]:
                                 enough. Only a pass after everything is
                                 done is guaranteed to catch all of them.
     """
+=======
+
+#auto clean 
+def auto_clean(df: pd.DataFrame) -> tuple[pd.DataFrame, CleaningLog]:
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     log = CleaningLog()
 
     df = remove_duplicates(df, log)
     df = clean_string_columns(df, log)
     df = handle_missing_values(df, log)
     df = treat_outliers(df, log)
+<<<<<<< HEAD
     df = remove_duplicates(df, log)
 
     return df, log
+=======
+
+    return df, log
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

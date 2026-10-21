@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 Exploratory data analysis.
 
@@ -7,6 +8,8 @@ rather than re-deriving them -- modules/profiler.py already did that
 classification in Phase 3, so every later module reuses it.
 """
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -14,6 +17,10 @@ from dataclasses import dataclass, field
 import pandas as pd
 
 
+<<<<<<< HEAD
+=======
+#numerical column analysis
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 @dataclass(frozen=True)
 class NumericColumnStats:
     name: str
@@ -27,6 +34,7 @@ class NumericColumnStats:
     skewness: float
 
 
+<<<<<<< HEAD
 @dataclass(frozen=True)
 class CategoricalColumnStats:
     name: str
@@ -56,6 +64,9 @@ class EDAResult:
 def analyze_numeric_columns(
     df: pd.DataFrame, numerical_columns: list[str]
 ) -> list[NumericColumnStats]:
+=======
+def analyze_numeric_columns(df: pd.DataFrame, numerical_columns: list[str]) -> list[NumericColumnStats]:
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     stats = []
     for col in numerical_columns:
         series = df[col].dropna()
@@ -78,6 +89,20 @@ def analyze_numeric_columns(
     return stats
 
 
+<<<<<<< HEAD
+=======
+#categorical column analysis
+@dataclass(frozen=True)
+class CategoricalColumnStats:
+    name: str
+    unique_count: int
+    top_value: str
+    top_value_count: int
+    top_value_pct: float
+    value_counts: dict[str, int] = field(default_factory=dict)
+
+
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 def analyze_categorical_columns(
     df: pd.DataFrame, categorical_columns: list[str], top_n: int = 10
 ) -> list[CategoricalColumnStats]:
@@ -102,6 +127,7 @@ def analyze_categorical_columns(
                 value_counts={str(k): int(v) for k, v in counts.items()},
             )
         )
+<<<<<<< HEAD
     return stats
 
 
@@ -166,3 +192,6 @@ def run_eda(
         correlation_matrix=correlation_matrix,
         correlation_pairs=correlation_pairs,
     )
+=======
+    return stats
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

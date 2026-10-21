@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 AI-generated feature engineering suggestions.
 
@@ -8,6 +9,8 @@ interactions, transforms, date parts, and encoding, derived purely from
 column shape and statistics, never from guessing what a column means.
 """
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 from __future__ import annotations
 
 from modules.ai.client import GeminiClient
@@ -18,13 +21,21 @@ from modules.profiler import DatasetProfile
 _INSTRUCTION = (
     "Below are the columns and statistical findings for a cleaned "
     "dataset. Suggest 3-5 concrete feature engineering ideas that could "
+<<<<<<< HEAD
     "improve analysis or machine learning on this specific data â€” for "
+=======
+    "improve analysis or machine learning on this specific data — for "
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     "example: binning a numeric column into groups, a ratio between two "
     "related columns, an interaction term, or a derived feature based "
     "on column names and their likely meaning. For each suggestion, "
     "name the exact columns involved and briefly explain the reasoning. "
     "Only suggest features that plausibly fit these specific column "
+<<<<<<< HEAD
     "names â€” do not invent columns that aren't listed. Format as a "
+=======
+    "names — do not invent columns that aren't listed. Format as a "
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     "markdown bullet list."
 )
 
@@ -72,7 +83,11 @@ def _fallback_suggestions(profile: DatasetProfile, eda: EDAResult) -> str:
     for stat in binning_candidates:
         unique_count = col_lookup[stat.name].unique_count
         bullets.append(
+<<<<<<< HEAD
             f"- **Bin `{stat.name}`** into groups (e.g. low/medium/high) â€” "
+=======
+            f"- **Bin `{stat.name}`** into groups (e.g. low/medium/high) — "
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
             f"it ranges from {stat.min} to {stat.max} with {unique_count} "
             f"distinct values, which may be easier to analyze as categories."
         )
@@ -81,7 +96,11 @@ def _fallback_suggestions(profile: DatasetProfile, eda: EDAResult) -> str:
         top = eda.correlation_pairs[0]
         bullets.append(
             f"- **Create an interaction feature** between `{top.column_a}` and "
+<<<<<<< HEAD
             f"`{top.column_b}` (e.g. their product or ratio) â€” they already show "
+=======
+            f"`{top.column_b}` (e.g. their product or ratio) — they already show "
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
             f"a {top.strength} relationship ({top.correlation}), so a combined "
             f"feature may capture their joint effect more directly."
         )
@@ -89,7 +108,11 @@ def _fallback_suggestions(profile: DatasetProfile, eda: EDAResult) -> str:
     skewed = [s for s in eda.numeric_stats if abs(s.skewness) > 1][:2]
     for stat in skewed:
         bullets.append(
+<<<<<<< HEAD
             f"- **Log-transform `{stat.name}`** â€” it is notably skewed "
+=======
+            f"- **Log-transform `{stat.name}`** — it is notably skewed "
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
             f"(skewness={stat.skewness}), and a log transform often makes "
             f"skewed distributions more suitable for linear models."
         )
@@ -97,14 +120,22 @@ def _fallback_suggestions(profile: DatasetProfile, eda: EDAResult) -> str:
     for col in profile.date_columns[:2]:
         bullets.append(
             f"- **Extract date parts from `{col}`** (year, month, day of "
+<<<<<<< HEAD
             f"week) â€” raw dates aren't directly usable by most models, but "
+=======
+            f"week) — raw dates aren't directly usable by most models, but "
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
             f"their components often are."
         )
 
     for col in profile.high_cardinality_columns[:2]:
         bullets.append(
             f"- **Use frequency encoding (or group rare categories) for "
+<<<<<<< HEAD
             f"`{col}`** â€” it has too many distinct values for standard "
+=======
+            f"`{col}`** — it has too many distinct values for standard "
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
             f"one-hot encoding to work well."
         )
 
@@ -123,4 +154,8 @@ def generate_feature_engineering_suggestions(
     if response.success:
         return response.text
 
+<<<<<<< HEAD
     return _fallback_suggestions(profile, eda)
+=======
+    return _fallback_suggestions(profile, eda)
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

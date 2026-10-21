@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 AI-generated explanations for cleaning actions.
 
@@ -7,6 +8,8 @@ back to the action's own technical reason on any AI failure, so a
 missing AI explanation never breaks the Cleaning page.
 """
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 from __future__ import annotations
 
 from modules.ai.client import GeminiClient
@@ -73,4 +76,8 @@ def explain_all_actions(
     for i, action in enumerate(actions):
         explanations[action_key(action, i)] = explain_cleaning_action(client, action)
 
+<<<<<<< HEAD
     return explanations
+=======
+    return explanations
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

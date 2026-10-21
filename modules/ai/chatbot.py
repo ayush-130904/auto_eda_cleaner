@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 AI dataset chatbot. Answers questions grounded in the dataset's actual
 profile, quality, cleaning log, and EDA facts -- not raw row-by-row
@@ -5,6 +6,8 @@ data (keeps prompts small) and not general knowledge unrelated to this
 dataset. Maintains conversation history for multi-turn context.
 """
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -119,4 +122,8 @@ def ask_chatbot(client: GeminiClient, session: ChatSession, question: str) -> st
         )
 
     session.add_assistant_message(answer)
+<<<<<<< HEAD
     return answer
+=======
+    return answer
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

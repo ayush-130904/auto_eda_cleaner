@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 Dataset loading and validation.
 
@@ -26,6 +27,16 @@ import pandas as pd
 # not a new branch buried in loading logic.
 _READERS: dict[str, Callable[[io.BytesIO], pd.DataFrame]] = {
     ".csv": pd.read_csv,
+=======
+from __future__ import  annotations
+import io 
+from dataclasses import dataclass
+from typing import Callable
+import pandas as pd
+
+_READERS: dict[str, Callable[[io.BytesIO], pd.DataFrame]] = {
+    ".csv" : pd.read_csv,
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     ".xlsx": pd.read_excel,
     ".json": pd.read_json,
     ".parquet": pd.read_parquet,
@@ -33,6 +44,7 @@ _READERS: dict[str, Callable[[io.BytesIO], pd.DataFrame]] = {
 
 SUPPORTED_EXTENSIONS = tuple(_READERS.keys())
 
+<<<<<<< HEAD
 
 class UnsupportedFileTypeError(ValueError):
     """Raised when the uploaded file's extension isn't one we support."""
@@ -52,6 +64,19 @@ class DatasetMetadata:
     (profiling, quality scoring, reports) so they don't each recompute
     the same basics."""
 
+=======
+class UnsupportedFileTypeError(ValueError):
+    """Raised when the uploaded file's extension isn't one we support."""
+
+class FileTooLargeError(ValueError):
+    """Raised when the uploaded file exceeds the configured size limit."""
+
+class EmptyDatasetError(ValueError):
+    """Raised when the file parses successfully but contains zero rows."""
+
+@dataclass(frozen=True)
+class DatasetMetadata:
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     filename: str
     file_size_mb: float
     n_rows: int
@@ -60,13 +85,18 @@ class DatasetMetadata:
     column_names: list[str]
     dtype_counts: dict[str, int]
 
+<<<<<<< HEAD
 
 def _extension_of(filename: str) -> str:
     """Return the lowercase extension including the dot, e.g. '.csv'."""
+=======
+def _extension_of(filename: str) -> str:
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     if "." not in filename:
         return ""
     return "." + filename.rsplit(".", 1)[-1].lower()
 
+<<<<<<< HEAD
 
 def validate_file(filename: str, file_size_bytes: int, max_upload_mb: int) -> None:
     """
@@ -79,6 +109,9 @@ def validate_file(filename: str, file_size_bytes: int, max_upload_mb: int) -> No
     Raises UnsupportedFileTypeError or FileTooLargeError; returns None
     (no exception) if the file passes both checks.
     """
+=======
+def validate_file(filename: str, file_size_bytes: int, max_upload_mb: int) -> None:
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     extension = _extension_of(filename)
     if extension not in _READERS:
         raise UnsupportedFileTypeError(
@@ -92,6 +125,7 @@ def validate_file(filename: str, file_size_bytes: int, max_upload_mb: int) -> No
             f"File is {size_mb:.1f}MB, which exceeds the {max_upload_mb}MB limit."
         )
 
+<<<<<<< HEAD
 
 def load_dataset(file_obj: io.BytesIO, filename: str) -> pd.DataFrame:
     """
@@ -110,18 +144,29 @@ def load_dataset(file_obj: io.BytesIO, filename: str) -> pd.DataFrame:
     extension = _extension_of(filename)
     reader = _READERS[extension]  # KeyError impossible if validate_file() ran first
 
+=======
+def load_dataset(file_obj: io.BytesIO, filename: str) -> pd.DataFrame:
+    extension = _extension_of(filename)
+    reader = _READERS[extension]
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     df = reader(file_obj)
 
     if df.shape[0] == 0:
         raise EmptyDatasetError(
             "The file parsed successfully but contains zero rows."
         )
+<<<<<<< HEAD
 
     return df
 
 
 def get_metadata(df: pd.DataFrame, filename: str, file_size_bytes: int) -> DatasetMetadata:
     """Compute a lightweight summary of a loaded dataset."""
+=======
+    return df
+
+def get_metadata(df: pd.DataFrame, filename: str, file_size_bytes: int) -> DatasetMetadata:
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     dtype_counts: dict[str, int] = {}
     for dtype in df.dtypes:
         key = str(dtype)
@@ -135,4 +180,8 @@ def get_metadata(df: pd.DataFrame, filename: str, file_size_bytes: int) -> Datas
         memory_usage_mb=round(df.memory_usage(deep=True).sum() / (1024 * 1024), 3),
         column_names=list(df.columns),
         dtype_counts=dtype_counts,
+<<<<<<< HEAD
     )
+=======
+    )
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

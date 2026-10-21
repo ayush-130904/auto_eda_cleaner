@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 Report generation: HTML (Jinja2) and PDF (ReportLab).
 
@@ -7,6 +8,8 @@ dependency, which matters for deploying on Render's free tier where we
 can't guarantee external binaries are installed.
 """
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 from __future__ import annotations
 
 import io
@@ -202,8 +205,13 @@ def generate_pdf_report(
         ["Rows", str(profile.n_rows)],
         ["Columns", str(profile.n_columns)],
         ["Memory usage", f"{profile.memory_usage_mb} MB"],
+<<<<<<< HEAD
         ["Numeric columns", ", ".join(profile.numerical_columns) or "â€”"],
         ["Categorical columns", ", ".join(profile.categorical_columns) or "â€”"],
+=======
+        ["Numeric columns", ", ".join(profile.numerical_columns) or "—"],
+        ["Categorical columns", ", ".join(profile.categorical_columns) or "—"],
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     ]
     _kv_table_style = TableStyle([
         ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"),
@@ -248,7 +256,11 @@ def generate_pdf_report(
         ]))
         story.append(cleaning_table)
     else:
+<<<<<<< HEAD
         story.append(Paragraph("No cleaning actions were necessary â€” the dataset was already clean.", styles["Normal"]))
+=======
+        story.append(Paragraph("No cleaning actions were necessary — the dataset was already clean.", styles["Normal"]))
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 
     # --- AI sections ---
     if executive_summary:
@@ -272,8 +284,16 @@ def generate_pdf_report(
                 borderWidth=0, leftIndent=10, spaceBefore=4, spaceAfter=4,
             )
             story.append(Paragraph(
+<<<<<<< HEAD
                 f"<b>{issue.category}</b> ({issue.severity}) â€” {issue.description}", issue_style
             ))
 
     doc.build(story)
     return buffer.getvalue()
+=======
+                f"<b>{issue.category}</b> ({issue.severity}) — {issue.description}", issue_style
+            ))
+
+    doc.build(story)
+    return buffer.getvalue()
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

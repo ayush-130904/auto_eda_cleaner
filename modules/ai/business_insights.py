@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 AI-generated business insights.
 
@@ -9,6 +10,8 @@ on AI failure) is deliberately more limited than executive_summary.py's
 business interpretation requires reasoning we can't produce without AI.
 """
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 from __future__ import annotations
 
 from modules.ai.client import GeminiClient
@@ -20,7 +23,11 @@ _INSTRUCTION = (
     "Below are statistical findings from a cleaned dataset: correlations "
     "between numeric columns, column distributions, and categorical "
     "breakdowns. Identify 3-5 business-relevant insights a stakeholder "
+<<<<<<< HEAD
     "would care about â€” for example: notable relationships between "
+=======
+    "would care about — for example: notable relationships between "
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     "metrics, columns with unusual concentration or spread, or dominant "
     "categories. For each insight, state the finding and one plausible "
     "business interpretation. Be clear that interpretations are "
@@ -72,11 +79,23 @@ def build_business_insights_prompt(quality: QualityScore, eda: EDAResult) -> str
     context = _gather_context(quality, eda)
     return build_prompt(_INSTRUCTION, truncate_for_prompt(context))
 
+<<<<<<< HEAD
 
 def _fallback_insights(quality: QualityScore, eda: EDAResult) -> str:
     """Algorithmically assembled insights used if the AI call fails.
     States what was measured, not why it might matter -- see module
     docstring for why this fallback is intentionally more limited."""
+=======
+def _fallback_insights(quality: QualityScore, eda: EDAResult) -> str:
+    """Algorithmically assembled insights used if the AI call fails.
+
+    Unlike executive_summary.py's fallback, this one is honest about a
+    real limitation: we can restate WHAT was found (a correlation
+    exists, a category dominates), but genuine business interpretation
+    -- WHY it might matter, what to investigate -- requires reasoning
+    we can't produce without the AI. The fallback states facts plainly
+    rather than inventing a business narrative it can't actually back."""
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     bullets = []
 
     for pair in eda.correlation_pairs[:3]:
@@ -90,7 +109,11 @@ def _fallback_insights(quality: QualityScore, eda: EDAResult) -> str:
         if stat.top_value_pct >= 50:
             bullets.append(
                 f"- **{stat.name}** is dominated by '{stat.top_value}' "
+<<<<<<< HEAD
                 f"({stat.top_value_pct}% of records) â€” worth checking "
+=======
+                f"({stat.top_value_pct}% of records) — worth checking "
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
                 f"whether this concentration is expected."
             )
 
@@ -106,13 +129,21 @@ def _fallback_insights(quality: QualityScore, eda: EDAResult) -> str:
     return "\n".join(bullets)
 
 
+<<<<<<< HEAD
 def generate_business_insights(
     client: GeminiClient, quality: QualityScore, eda: EDAResult
 ) -> str:
+=======
+def generate_business_insights(client: GeminiClient, quality: QualityScore, eda: EDAResult) -> str:
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     prompt = build_business_insights_prompt(quality, eda)
     response = client.generate(prompt)
 
     if response.success:
         return response.text
 
+<<<<<<< HEAD
     return _fallback_insights(quality, eda)
+=======
+    return _fallback_insights(quality, eda)
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 gi# Environment
+=======
+# Environment
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 .env
 venv/
 env/
@@ -28,6 +32,9 @@ logs/*
 .DS_Store
 .vscode/
 .idea/
+<<<<<<< HEAD
 
 # Visual Studio cache
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 .vs/

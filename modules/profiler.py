@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 Dataset profiling.
 
@@ -7,6 +8,8 @@ cardinality columns — so that quality scoring (Phase 4) and cleaning
 (Phase 5) don't each have to re-derive the same information themselves.
 """
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -16,8 +19,11 @@ import pandas as pd
 
 @dataclass(frozen=True)
 class ColumnProfile:
+<<<<<<< HEAD
     """Profile of a single column."""
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     name: str
     dtype: str
     missing_count: int
@@ -29,8 +35,11 @@ class ColumnProfile:
 
 @dataclass(frozen=True)
 class DatasetProfile:
+<<<<<<< HEAD
     """Profile of the whole dataset, including one ColumnProfile per column."""
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     n_rows: int
     n_columns: int
     memory_usage_mb: float
@@ -43,9 +52,13 @@ class DatasetProfile:
     high_cardinality_columns: list[str]
     columns: list[ColumnProfile] = field(default_factory=list)
 
+<<<<<<< HEAD
 
 def profile_dataset(df: pd.DataFrame) -> DatasetProfile:
     """Build a full structural profile of `df`."""
+=======
+def profile_dataset(df: pd.DataFrame) -> DatasetProfile:
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     n_rows, n_columns = df.shape
     memory_usage_mb = round(df.memory_usage(deep=True).sum() / (1024 * 1024), 3)
     duplicate_rows = int(df.duplicated().sum())
@@ -63,9 +76,15 @@ def profile_dataset(df: pd.DataFrame) -> DatasetProfile:
 
         missing_count = int(series.isna().sum())
         missing_pct = round((missing_count / n_rows * 100) if n_rows else 0.0, 2)
+<<<<<<< HEAD
 
         unique_count = int(series.nunique(dropna=True))
         is_constant = unique_count <= 1
+=======
+        unique_count = int(series.nunique(dropna=True))
+        is_constant = unique_count <= 1
+        is_high_cardinality = unique_count > 50 and (unique_count / n_rows > 0.5 if n_rows else False)
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 
         dtype_str = str(series.dtype)
 
@@ -79,10 +98,13 @@ def profile_dataset(df: pd.DataFrame) -> DatasetProfile:
         else:
             categorical_columns.append(col)
 
+<<<<<<< HEAD
         # High cardinality only makes sense for categorical (text-like)
         # columns. Dates are naturally all-unique — that's not a data
         # quality issue — and numeric columns have their own concerns
         # (outliers, distribution) rather than "too many categories."
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
         is_high_cardinality = (
             not is_date
             and not is_numeric
@@ -106,7 +128,10 @@ def profile_dataset(df: pd.DataFrame) -> DatasetProfile:
                 is_high_cardinality=is_high_cardinality,
             )
         )
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     return DatasetProfile(
         n_rows=n_rows,
         n_columns=n_columns,
@@ -120,3 +145,7 @@ def profile_dataset(df: pd.DataFrame) -> DatasetProfile:
         high_cardinality_columns=high_cardinality_columns,
         columns=columns,
     )
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

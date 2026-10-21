@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 AI-generated ML algorithm recommendations, built on modules/ml_readiness.py.
 Fallback gives genuinely defensible rule-based suggestions tied to the
@@ -5,6 +6,8 @@ inferred task and readiness issues already found (e.g. avoids
 recommending accuracy as a metric if class imbalance was flagged).
 """
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 from __future__ import annotations
 
 from modules.ai.client import GeminiClient
@@ -77,7 +80,11 @@ def _fallback_recommendations(readiness: MLReadinessResult) -> str:
 
     bullets = []
     for name, reason in algorithms:
+<<<<<<< HEAD
         bullets.append(f"- **{name}** â€” {reason}.")
+=======
+        bullets.append(f"- **{name}** — {reason}.")
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 
     if readiness.inferred_task == "classification":
         metric = (
@@ -87,11 +94,19 @@ def _fallback_recommendations(readiness: MLReadinessResult) -> str:
         )
         bullets.append(f"- Suggested evaluation: {metric}.")
     elif readiness.inferred_task == "regression":
+<<<<<<< HEAD
         bullets.append("- Suggested evaluation: RMSE and RÂ².")
 
     if has_multicollinearity:
         bullets.append(
             "- Note: multicollinearity was detected â€” tree-based models "
+=======
+        bullets.append("- Suggested evaluation: RMSE and R².")
+
+    if has_multicollinearity:
+        bullets.append(
+            "- Note: multicollinearity was detected — tree-based models "
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
             "(Random Forest) are more robust to this than linear models."
         )
 
@@ -110,4 +125,8 @@ def generate_ml_recommendations(
     if response.success:
         return response.text
 
+<<<<<<< HEAD
     return _fallback_recommendations(readiness)
+=======
+    return _fallback_recommendations(readiness)
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

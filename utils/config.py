@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 Centralized application configuration.
 
@@ -7,6 +8,8 @@ one place to see every config value the app depends on, and one place to
 change defaults or add validation later.
 """
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 from __future__ import annotations
 
 import os
@@ -79,7 +82,11 @@ def load_settings() -> Settings:
     """
     settings = Settings(
         gemini_api_key=os.getenv("GEMINI_API_KEY", ""),
+<<<<<<< HEAD
         gemini_model=os.getenv("GEMINI_MODEL", "gemini-3.5-flash"),
+=======
+        gemini_model=os.getenv("GEMINI_MODEL", "gemini-1.5-flash"),
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
         app_env=os.getenv("APP_ENV", "development"),
         log_level=os.getenv("LOG_LEVEL", "INFO"),
         max_upload_mb=_get_int("MAX_UPLOAD_MB", 50),

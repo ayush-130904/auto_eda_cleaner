@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 ML readiness assessment.
 
@@ -8,6 +9,8 @@ encoding, scaling, multicollinearity, outliers, and unusable columns,
 and the inferred task defaults to clustering.
 """
 
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -200,6 +203,7 @@ def _check_class_imbalance(df: pd.DataFrame, target_column: str) -> ReadinessIss
 def _check_target_leakage(
     df: pd.DataFrame, eda: EDAResult, target_column: str
 ) -> ReadinessIssue | None:
+<<<<<<< HEAD
     """Flags numeric features that correlate almost perfectly (>= 0.98)
     with the target -- suspicious, since it may mean a feature is
     derived from the target itself, which would leak the answer into
@@ -219,6 +223,8 @@ def _check_target_leakage(
     category numerically isn't meaningful without a different technique
     (e.g. ANOVA), which is out of scope here.
     """
+=======
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
     target_series = df[target_column]
 
     if pd.api.types.is_numeric_dtype(target_series):
@@ -303,4 +309,8 @@ def assess_ml_readiness(
         issues=issues,
         target_column=target_column,
         inferred_task=inferred_task,
+<<<<<<< HEAD
     )
+=======
+    )
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced

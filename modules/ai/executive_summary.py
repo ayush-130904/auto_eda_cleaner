@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 AI-generated executive summary.
 
@@ -12,6 +13,12 @@ from __future__ import annotations
 
 from modules.ai.client import GeminiClient
 from modules.ai.prompt_templates import build_prompt, pluralize, truncate_for_prompt
+=======
+from __future__ import annotations
+
+from modules.ai.client import GeminiClient
+from modules.ai.prompt_templates import build_prompt, truncate_for_prompt
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 from modules.cleaner import CleaningLog
 from modules.eda import EDAResult
 from modules.profiler import DatasetProfile
@@ -79,6 +86,16 @@ def build_executive_summary_prompt(
     return build_prompt(_INSTRUCTION, truncate_for_prompt(context))
 
 
+<<<<<<< HEAD
+=======
+def _plural(count: int, singular: str, plural: str | None = None) -> str:
+    """Return the correctly pluralized word for `count`."""
+    if count == 1:
+        return singular
+    return plural if plural is not None else f"{singular}s"
+
+
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
 def _fallback_summary(
     profile: DatasetProfile,
     quality: QualityScore,
@@ -94,8 +111,13 @@ def _fallback_summary(
 
     sentences = [
         f"This dataset contains {profile.n_rows:,} "
+<<<<<<< HEAD
         f"{pluralize(profile.n_rows, 'row')} and {profile.n_columns} "
         f"{pluralize(profile.n_columns, 'column')}.",
+=======
+        f"{_plural(profile.n_rows, 'row')} and {profile.n_columns} "
+        f"{_plural(profile.n_columns, 'column')}.",
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
         f"Overall data quality was {quality_word} "
         f"({quality.overall_score}%) before cleaning.",
     ]
@@ -103,8 +125,13 @@ def _fallback_summary(
     if log.actions:
         sentences.append(
             f"{len(log.actions)} automated cleaning "
+<<<<<<< HEAD
             f"{pluralize(len(log.actions), 'action')} "
             f"{pluralize(len(log.actions), 'was', 'were')} applied, "
+=======
+            f"{_plural(len(log.actions), 'action')} "
+            f"{_plural(len(log.actions), 'was', 'were')} applied, "
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
             f"addressing issues including "
             f"{', '.join(sorted({a.issue for a in log.actions}))}."
         )
@@ -127,4 +154,8 @@ def generate_executive_summary(
     if response.success:
         return response.text
 
+<<<<<<< HEAD
     return _fallback_summary(profile, quality, log)
+=======
+    return _fallback_summary(profile, quality, log)
+>>>>>>> 7fc5fc00838c5629a4b6e66db67a11bd58a73ced
